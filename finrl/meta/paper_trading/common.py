@@ -207,7 +207,9 @@ class AgentBase:
 
         self.states = None  # assert self.states == (1, state_dim)
         self.device = torch.device(
-            f"cuda:{gpu_id}" if (torch.cuda.is_available() and (gpu_id >= 0)) else "cpu"
+            #f"cuda:{gpu_id}" if (torch.cuda.is_available() and (gpu_id >= 0)) else "cpu"
+            ##@TO DO : Test MPS version
+            f"cuda:{gpu_id}" if (torch.cuda.is_available() and (gpu_id >= 0)) else ("mps" if torch.backends.mps.is_available() else "cpu")
         )
 
         act_class = getattr(self, "act_class", None)
